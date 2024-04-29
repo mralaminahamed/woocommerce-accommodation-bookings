@@ -48,14 +48,14 @@
 			'id'          => '_wc_accommodation_booking_requires_confirmation',
 			'label'       => __( 'Requires confirmation?', 'woocommerce-accommodation-bookings' ),
 			'description' => __( 'Check this box if the booking requires admin approval/confirmation. Payment will not be taken during checkout.', 'woocommerce-accommodation-bookings' ),
-			'value'       => get_post_meta( $post_id, '_wc_booking_requires_confirmation', true ),
-		) );
+			'value'       => wc_bookings_string_to_bool( get_post_meta( $post_id, '_wc_booking_requires_confirmation', true ) ) ? 'yes' : 'no',
+        ) );
 
 		woocommerce_wp_checkbox( array(
 			'id'          => '_wc_accommodation_booking_user_can_cancel',
 			'label'       => __( 'Can be cancelled?', 'woocommerce-accommodation-bookings' ),
 			'description' => __( 'Check this box if the booking can be cancelled by the customer after it has been purchased. A refund will not be sent automatically.', 'woocommerce-accommodation-bookings' ),
-			'value'       => get_post_meta( $post_id, '_wc_booking_user_can_cancel', true ),
+            'value'       => wc_bookings_string_to_bool( get_post_meta( $post_id, '_wc_booking_user_can_cancel', true ) ) ? 'yes' : 'no',
 		) );
 
 		$cancel_limit      = max( absint( get_post_meta( $post_id, '_wc_booking_cancel_limit', true ) ), 1 );
