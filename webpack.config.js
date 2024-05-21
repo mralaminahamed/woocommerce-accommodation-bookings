@@ -2,7 +2,6 @@ const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 const WooDependencyExtractionWebpackPlugin = require('@woocommerce/dependency-extraction-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
-const path = require('path');
 
 module.exports = {
 	...defaultConfig,
