@@ -121,7 +121,9 @@ class WC_Accommodation_Bookings_Plugin {
 		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 2 );
 		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_assets' ) );
 
-		if ( is_admin() ) {
+		$rest_request = isset( $_SERVER['REQUEST_URI'] ) && false !== strpos( $_SERVER['REQUEST_URI'], 'wp-json/wc-bookings' );
+
+		if ( is_admin() || $rest_request ) {
 			add_action( 'init', array( $this, 'admin_includes' ), 10 );
 			add_action( 'woocommerce_product_duplicate', array( $this, 'woocommerce_duplicate_product' ), 10, 2 );
 		}
