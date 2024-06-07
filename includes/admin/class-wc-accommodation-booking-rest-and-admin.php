@@ -1,4 +1,10 @@
 <?php
+/**
+ * WooCommerce Accommodation Bookings REST and Admin required functions.
+ *
+ * @package woocommerce-accommodation-bookings
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -6,10 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Required functions for REST API and Admin functionality.
  */
-class WC_Accommodation_Booking_REST_Admin {
+class WC_Accommodation_Booking_REST_And_Admin {
 
 	/**
-	 * Hook into WordPress and WooCommerce
+	 * Constructor.
 	 */
 	public function __construct() {
 		add_filter( 'product_type_selector', array( $this, 'product_type_selector' ) );
@@ -18,7 +24,9 @@ class WC_Accommodation_Booking_REST_Admin {
 	}
 
 	/**
-	 * Add the accommodation booking product type
+	 * Add the accommodation booking product type.
+	 *
+	 * @param array $types Product types.
 	 *
 	 * @return array
 	 */
@@ -28,16 +36,16 @@ class WC_Accommodation_Booking_REST_Admin {
 	}
 
 	/**
-	 * Saves booking / accommodation data for a product
+	 * Saves booking / accommodation data for a product.
 	 *
-	 * @version  1.0.11
-	 * @param    int $post_id
+	 * @version 1.0.11
+	 * @param   int $post_id Post ID.
 	 */
 	public function save_product_data( $post_id ) {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput
 		global $wpdb;
 
-		$product_type         = empty( $_POST['product-type'] ) ? 'simple' : sanitize_title( stripslashes( $_POST['product-type'] ) );
-		$has_additional_costs = false;
+		$product_type = empty( $_POST['product-type'] ) ? 'simple' : sanitize_title( stripslashes( $_POST['product-type'] ) );
 
 		if ( 'accommodation-booking' !== $product_type ) {
 			return;
@@ -79,14 +87,14 @@ class WC_Accommodation_Booking_REST_Admin {
 					$value = $value ? floatval( $value ) : '';
 					break;
 				case 'yesno':
-					$value = $value == 'yes' ? 'yes' : 'no';
+					$value = 'yes' === $value ? 'yes' : 'no';
 					break;
 				case 'issetyesno':
 					$value = $value ? 'yes' : 'no';
 					break;
 				case 'max_date':
 					$value = absint( $value );
-					if ( $value == 0 ) {
+					if ( 0 === $value ) {
 						$value = 1;
 					}
 					break;
@@ -104,9 +112,9 @@ class WC_Accommodation_Booking_REST_Admin {
 			}
 		}
 
-		// Availability
+		// Availability.
 		$availability = array();
-		$row_size     = isset( $_POST['wc_accommodation_booking_availability_type'] ) ? sizeof( $_POST['wc_accommodation_booking_availability_type'] ) : 0;
+		$row_size     = isset( $_POST['wc_accommodation_booking_availability_type'] ) ? count( $_POST['wc_accommodation_booking_availability_type'] ) : 0;
 		for ( $i = 0; $i < $row_size; $i++ ) {
 			$availability[ $i ]['type']     = wc_clean( $_POST['wc_accommodation_booking_availability_type'][ $i ] );
 			$availability[ $i ]['bookable'] = wc_clean( $_POST['wc_accommodation_booking_availability_bookable'][ $i ] );
@@ -138,7 +146,7 @@ class WC_Accommodation_Booking_REST_Admin {
 		$restricted_days = isset( $_POST['_wc_accommodation_booking_restricted_days'] ) ? wc_clean( $_POST['_wc_accommodation_booking_restricted_days'] ) : '';
 		update_post_meta( $post_id, '_wc_booking_restricted_days', $restricted_days );
 
-		// Resources
+		// Resources.
 		if ( isset( $_POST['resource_id'] ) && isset( $_POST['_wc_booking_has_resources'] ) ) {
 			$resource_data       = filter_input_array(
 				INPUT_POST,
@@ -191,26 +199,24 @@ class WC_Accommodation_Booking_REST_Admin {
 
 				$resource_base_costs[ $resource_id ]  = wc_clean( $resource_base_cost[ $i ] );
 				$resource_block_costs[ $resource_id ] = wc_clean( $resource_block_cost[ $i ] );
-
-				if ( ( (float) $resource_base_cost[ $i ] + (float) $resource_block_cost[ $i ] ) > 0 ) {
-					$has_additional_costs = true;
-				}
 			}
 
 			update_post_meta( $post_id, '_resource_base_costs', $resource_base_costs );
 			update_post_meta( $post_id, '_resource_block_costs', $resource_block_costs );
 		}
 
-		// Rates
+		// Rates.
 		$pricing            = array();
 		$original_base_cost = abs( (float) get_post_meta( $post_id, '_wc_booking_base_cost', true ) );
 
-		$row_size = isset( $_POST['wc_accommodation_booking_pricing_type'] ) ? sizeof( $_POST['wc_accommodation_booking_pricing_type'] ) : 0;
+		$row_size = isset( $_POST['wc_accommodation_booking_pricing_type'] ) ? count( $_POST['wc_accommodation_booking_pricing_type'] ) : 0;
 		for ( $i = 0; $i < $row_size; $i++ ) {
-			$pricing[ $i ]['base_cost']     = $pricing[ $i ]['cost'] = 0;
+			$pricing[ $i ]['base_cost']     = 0;
+			$pricing[ $i ]['cost']          = 0;
 			$pricing[ $i ]['type']          = wc_clean( $_POST['wc_accommodation_booking_pricing_type'][ $i ] );
 			$new_cost                       = abs( (float) wc_clean( $_POST['wc_accommodation_booking_pricing_block_cost'][ $i ] ) );
-			$pricing[ $i ]['base_modifier'] = $pricing[ $i ]['modifier'] = $new_cost > $original_base_cost ? 'plus' : 'minus';
+			$pricing[ $i ]['base_modifier'] = $new_cost > $original_base_cost ? 'plus' : 'minus';
+			$pricing[ $i ]['modifier']      = $pricing[ $i ]['base_modifier'];
 			$pricing[ $i ]['cost']          = abs( $new_cost - $original_base_cost );
 
 			switch ( $pricing[ $i ]['type'] ) {
@@ -233,7 +239,7 @@ class WC_Accommodation_Booking_REST_Admin {
 			}
 		}
 
-		// Person Types
+		// Person Types.
 		if ( isset( $_POST['person_id'] ) && isset( $_POST['_wc_booking_has_persons'] ) ) {
 			$person_data        = filter_input_array(
 				INPUT_POST,
@@ -291,7 +297,8 @@ class WC_Accommodation_Booking_REST_Admin {
 				$person_id = absint( $person_ids[ $i ] );
 
 				if ( empty( $person_name[ $i ] ) ) {
-					$person_name[ $i ] = sprintf( __( 'Person Type #%d', 'woocommerce-bookings' ), ( $i + 1 ) );
+					/* translators: %d: person type number */
+					$person_name[ $i ] = sprintf( __( 'Person Type #%d', 'woocommerce-accommodation-bookings' ), ( $i + 1 ) );
 				}
 
 				wp_update_post(
@@ -307,10 +314,6 @@ class WC_Accommodation_Booking_REST_Admin {
 				update_post_meta( $person_id, 'block_cost', wc_clean( $person_block_cost[ $i ] ) );
 				update_post_meta( $person_id, 'min', wc_clean( $person_min[ $i ] ) );
 				update_post_meta( $person_id, 'max', wc_clean( $person_max[ $i ] ) );
-
-				if ( $person_cost[ $i ] > 0 || $person_block_cost[ $i ] > 0 ) {
-					$has_additional_costs = true;
-				}
 			}
 		}
 
@@ -321,10 +324,10 @@ class WC_Accommodation_Booking_REST_Admin {
 		update_post_meta( $post_id, '_sale_price', '' );
 		update_post_meta( $post_id, '_manage_stock', 'no' );
 
-		// Set price so filters work - using get_base_cost()
+		// Set price so filters work - using get_base_cost().
 		$product = wc_get_product( $post_id );
 		update_post_meta( $post_id, '_price', $product->get_base_cost() );
 	}
 }
 
-new WC_Accommodation_Booking_REST_Admin();
+new WC_Accommodation_Booking_REST_And_Admin();
