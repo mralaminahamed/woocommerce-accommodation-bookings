@@ -123,7 +123,7 @@ class WC_Accommodation_Booking_Admin_Panels {
     /**
      * Add tab entries definition
      *
-     * @param array $tabs
+     * @param array $tabs List of tabs.
      * @return array
      */
     public function add_tabs( $tabs ) {
