@@ -120,29 +120,29 @@ class WC_Accommodation_Booking_Admin_Panels {
 		return $options;
 	}
 
-    /**
-     * Add tab entries definition
-     *
-     * @param array $tabs List of tabs.
-     * @return array
-     */
-    public function add_tabs( $tabs ) {
-        $tabs['accommodation_bookings_rates'] = array(
-            'label'    => __( 'Rates', 'woocommerce-accommodation-bookings' ),
-            'target'   => 'accommodation_bookings_rates',
-            'class'    => array( 'show_if_accommodation-booking', 'bookings_rates_tabs' ),
-            'priority' => 80,
-        );
+	/**
+	 * Add tab entries definition
+	 *
+	 * @param array $tabs List of tabs.
+	 * @return array
+	 */
+	public function add_tabs( $tabs ) {
+		$tabs['accommodation_bookings_rates'] = array(
+			'label'	=> __( 'Rates', 'woocommerce-accommodation-bookings' ),
+			'target'   => 'accommodation_bookings_rates',
+			'class'	=> array( 'show_if_accommodation-booking', 'bookings_rates_tabs' ),
+			'priority' => 80,
+		);
 
-        $tabs['accommodation_bookings_availability'] = array(
-            'label'    => __( 'Availability', 'woocommerce-accommodation-bookings' ),
-            'target'   => 'accommodation_bookings_availability',
-            'class'    => array( 'show_if_accommodation-booking', 'bookings_availability_tabs' ),
-            'priority' => 80,
-        );
+		$tabs['accommodation_bookings_availability'] = array(
+			'label'	=> __( 'Availability', 'woocommerce-accommodation-bookings' ),
+			'target'   => 'accommodation_bookings_availability',
+			'class'	=> array( 'show_if_accommodation-booking', 'bookings_availability_tabs' ),
+			'priority' => 80,
+		);
 
-        return $tabs;
-    }
+		return $tabs;
+	}
 
 	/**
 	 * Saves booking / accommodation data for a product
