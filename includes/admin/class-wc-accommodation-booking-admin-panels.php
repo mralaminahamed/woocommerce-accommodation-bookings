@@ -20,7 +20,7 @@ class WC_Accommodation_Booking_Admin_Panels {
 
 		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'general_product_data' ) );
 
-		add_action( 'woocommerce_product_write_panel_tabs', array( $this, 'add_tabs' ), 5 );
+		add_filter( 'woocommerce_product_data_tabs', array( $this, 'add_tabs' ), 5 );
 
 		add_action( 'woocommerce_process_product_meta', array( $this,'save_product_data' ), 25 );
 	}
@@ -121,10 +121,26 @@ class WC_Accommodation_Booking_Admin_Panels {
 	}
 
 	/**
-	 * Loads the HTML that is used to display the actual tab navigation
+	 * Add tab entries definition
+     * @param array $tabs
+     * @return array
 	 */
-	public function add_tabs() {
-		include( 'views/html-accommodation-booking-tabs.php' );
+	public function add_tabs($tabs) {
+        $tabs['bookings_rates'] = [
+            'label'    => __('Rates', 'woocommerce-accommodation-bookings'),
+            'target'   => 'accommodation_bookings_rates',
+            'class'    => ['show_if_accommodation-booking', 'bookings_rates_tabs'],
+            'priority' => 80,
+        ];
+
+        $tabs['bookings_availability'] = [
+            'label'    => __('Availability', 'woocommerce-accommodation-bookings'),
+            'target'   => 'accommodation_bookings_availability',
+            'class'    => ['show_if_accommodation-booking', 'bookings_availability_tabs'],
+            'priority' => 80,
+        ];
+
+        return $tabs;
 	}
 
 	/**
