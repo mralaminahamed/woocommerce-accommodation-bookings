@@ -127,17 +127,16 @@ class WC_Accommodation_Booking_Admin_Panels {
 	 * @return array
 	 */
 	public function add_tabs( $tabs ) {
-		$tabs['accommodation_bookings_rates'] = array(
+		$tabs['accommodation_bookings_pricing']      = array(
 			'label'    => __( 'Rates', 'woocommerce-accommodation-bookings' ),
 			'target'   => 'accommodation_bookings_rates',
-			'class'    => array( 'show_if_accommodation-booking', 'bookings_rates_tabs' ),
+			'class'    => array( 'show_if_accommodation-booking', 'accommodation_bookings_tab', 'bookings_pricing_tab', 'advanced_options' ),
 			'priority' => 80,
 		);
-
 		$tabs['accommodation_bookings_availability'] = array(
 			'label'    => __( 'Availability', 'woocommerce-accommodation-bookings' ),
 			'target'   => 'accommodation_bookings_availability',
-			'class'    => array( 'show_if_accommodation-booking', 'bookings_availability_tabs' ),
+			'class'    => array( 'show_if_accommodation-booking', 'accommodation_bookings_tab', 'bookings_availability_tab', 'advanced_options' ),
 			'priority' => 80,
 		);
 
