@@ -38,6 +38,17 @@ If the prices shown on the product do not match the prices defined in the dashbo
 
 == Changelog ==
 
+= 1.2.7 - 2024-07-15 =
+* Dev - Bump WooCommerce "tested up to" version 9.0.
+* Dev - Bump WooCommerce minimum supported version to 8.8.
+* Dev - Bump WordPress "tested up to" version 6.6.
+* Dev - Bump WordPress minimum supported version to 6.4.
+* Dev - Update NPM packages and node version to v20 to modernize developer experience.
+* Dev - Add proper plugin name to the `readme.txt`. Remove Bookings from our required plugins list as it's not hosted on WordPress.org.
+* Dev - Exclude the Woo Comment Hook `@since` sniff.
+* Fix - Unavailable accommodation days appear available even when booked.
+* Fix - Error in Updating Accommodation Product Data via REST API: `Unrecognized Product Type Response`.
+
 = 1.2.6 - 2024-05-20 =
 * Dev - Bump WooCommerce "tested up to" version 8.9.
 * Dev - Bump WooCommerce minimum supported version to 8.7.
