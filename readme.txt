@@ -1,8 +1,8 @@
-=== Plugin Name ===
+=== WooCommerce Accommodation Bookings ===
 Contributors:  woocommerce, automattic
 Tags: woocommerce, bookings, accommodations
-Requires at least: 6.3
-Tested up to: 6.5
+Requires at least: 6.4
+Tested up to: 6.6
 Stable tag: 1.2.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
