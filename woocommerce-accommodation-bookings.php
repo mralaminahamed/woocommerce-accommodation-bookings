@@ -20,6 +20,8 @@
  * License: GNU General Public License v3.0
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
  *
+ * Woo: 1412069:99b2a7a4af90b6cefd2a733b3b1f78e7
+ *
  * @package woocommerce-accommodation-bookings
  */
 
