@@ -109,9 +109,13 @@ class WC_Accommodation_Booking_Admin_Panels {
 		return $options;
 	}
 
-	/**
-	 * Loads the HTML that is used to display the actual tab navigation
-	 */
+
+    /**
+     * Add tab entries definition
+     *
+     * @param array $tabs List of tabs.
+     * @return array
+     */
 	public function add_tabs( $tabs ) {
 		$tabs['accommodation_bookings_pricing']      = array(
 			'label'    => __( 'Rates', 'woocommerce-accommodation-bookings' ),
