@@ -21,7 +21,7 @@ export const api = require('./api');
  */
 export async function switchTab(page, tabName, panelSelector = false) {
 	await page
-		.locator('.wc-tabs > li > a', { hasText: tabName })
+		.locator('.wc-tabs > li:visible > a', { hasText: tabName })
 		.last()
 		.click();
 	if (panelSelector) {
