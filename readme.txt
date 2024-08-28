@@ -38,7 +38,7 @@ If the prices shown on the product do not match the prices defined in the dashbo
 
 == Changelog ==
 
-= 1.2.8 - 2024-08-19 =
+= 1.2.8 - 2024-08-28 =
 * Fix - Ensure display of checkbox options shows correctly in an Accommodation product.
 * Fix - Allow Accommodation product tabs to be ordered properly.
 * Dev - Bump WooCommerce "tested up to" version 9.2.
