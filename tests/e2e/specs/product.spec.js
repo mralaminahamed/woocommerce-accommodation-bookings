@@ -145,7 +145,7 @@ test.describe('Product Tests', () => {
 		const addToCardButton = await page.locator(
 			'.single_add_to_cart_button'
 		);
-		await page.waitForTimeout(1000);
+
 		await expect(
 			page.locator('.wc-bookings-booking-cost .booking-error')
 		).toContainText(

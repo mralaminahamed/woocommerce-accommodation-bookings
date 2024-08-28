@@ -326,6 +326,7 @@ export async function addToCart(page) {
  * @param {Object} customerDetails Customer billing details
  */
 export async function blockFillBillingDetails(page, customerDetails) {
+	await page.waitForTimeout(3000);
 	const card = await page.locator('.wc-block-components-address-card');
 	if (await card.isVisible()) {
 		await card.locator('.wc-block-components-address-card__edit').click();
