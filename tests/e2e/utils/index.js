@@ -21,7 +21,7 @@ export const api = require('./api');
  */
 export async function switchTab(page, tabName, panelSelector = false) {
 	await page
-		.locator('.wc-tabs > li > a', { hasText: tabName })
+		.locator('.wc-tabs > li:visible > a', { hasText: tabName })
 		.last()
 		.click();
 	if (panelSelector) {
@@ -326,6 +326,11 @@ export async function addToCart(page) {
  * @param {Object} customerDetails Customer billing details
  */
 export async function blockFillBillingDetails(page, customerDetails) {
+	await page.waitForTimeout(3000);
+	const card = await page.locator('.wc-block-components-address-card');
+	if (await card.isVisible()) {
+		await card.locator('.wc-block-components-address-card__edit').click();
+	}
 	await page.locator('#email').fill(customerDetails.email);
 	await page.locator('#billing-first_name').fill(customerDetails.firstname);
 	await page.locator('#billing-last_name').fill(customerDetails.lastname);
