@@ -326,6 +326,10 @@ export async function addToCart(page) {
  * @param {Object} customerDetails Customer billing details
  */
 export async function blockFillBillingDetails(page, customerDetails) {
+	const card = await page.locator('.wc-block-components-address-card');
+	if (await card.isVisible()) {
+		await card.locator('.wc-block-components-address-card__edit').click();
+	}
 	await page.locator('#email').fill(customerDetails.email);
 	await page.locator('#billing-first_name').fill(customerDetails.firstname);
 	await page.locator('#billing-last_name').fill(customerDetails.lastname);
