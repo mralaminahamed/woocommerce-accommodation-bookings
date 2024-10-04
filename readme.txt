@@ -1,7 +1,7 @@
 === WooCommerce Accommodation Bookings ===
 Contributors:  woocommerce, automattic
 Tags: woocommerce, bookings, accommodations
-Requires at least: 6.4
+Requires at least: 6.5
 Tested up to: 6.6
 Stable tag: 1.2.8
 License: GNU General Public License v3.0
