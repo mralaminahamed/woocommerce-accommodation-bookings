@@ -38,6 +38,11 @@ If the prices shown on the product do not match the prices defined in the dashbo
 
 == Changelog ==
 
+= 1.2.9 - 2024-10-28 =
+* Dev - Bump WooCommerce "tested up to" version 9.4.
+* Dev - Bump WooCommerce minimum supported version to 9.2.
+* Dev - Bump WordPress minimum supported version to 6.5.
+
 = 1.2.8 - 2024-08-28 =
 * Fix - Ensure display of checkbox options shows correctly in an Accommodation product.
 * Fix - Allow Accommodation product tabs to be ordered properly.
