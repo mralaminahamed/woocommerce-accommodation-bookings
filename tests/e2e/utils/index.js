@@ -624,6 +624,7 @@ export async function clearEmailLogs(page) {
 	await page.goto('/wp-admin/admin.php?page=email-log');
 	const bulkAction = await page.locator('#bulk-action-selector-top');
 	if (await bulkAction.isVisible()) {
+		await page.locator('#cb-select-all-1').click();
 		await bulkAction.selectOption('el-log-list-delete-all');
 		await page.locator('#doaction').click();
 		await expect(
